@@ -7,12 +7,12 @@ const jwt = require('jsonwebtoken');
 const db = require('../Database/register.js');
 
 
-
+// Register Route
 router.post('/registerUser', async (req, res) => {
+  console.log("Registering user:", req.body);
   try {
     const { name, username, email, password } = req.body;
 
-    
     db.query('SELECT * FROM register WHERE username = ?', [username], async (err, results) => {
       if (err) {
         return res.status(500).json({ error: err.message });
@@ -22,37 +22,37 @@ router.post('/registerUser', async (req, res) => {
         return res.status(400).json({ message: 'Username already exists' });
       }
 
-      
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
-     
       const insertQuery = 'INSERT INTO register (name, username, email, password) VALUES (?, ?, ?, ?)';
       db.query(insertQuery, [name, username, email, hashedPassword], (err, result) => {
         if (err) {
           return res.status(500).json({ error: err.message });
         }
 
-        return res.status(201).json({ message: 'User registered successfully',
-            user : {
-                id: result.insertId,
-                name,
-                username,
-                email,
-                password : hashedPassword
-            }
-         });
+        // ✅ Move token generation and cookie setting here
+        const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.cookie('token', token, {
+          httpOnly: true,
+          maxAge: 3600000,
+          secure: false,
+          sameSite: 'lax'
+        });
+
+        return res.status(201).json({
+          message: 'User registered successfully',
+          user: {
+            id: result.insertId,
+            name,
+            username,
+            email,
+            password: hashedPassword
+          }
+        });
       });
-
     });
-    const token = jwt.sign({username}, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.cookie('token',token,{
-        httpOnly: true,
-        maxAge: 3600000, 
-        secure: false,
-        sameSite: 'lax'
-    })
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
