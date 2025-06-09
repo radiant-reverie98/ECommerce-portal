@@ -1,4 +1,4 @@
-#ECommerce portal
+# ECommerce portal
 
 ## Tech Stack
 - Frontend React Js, Tailwind CSS
