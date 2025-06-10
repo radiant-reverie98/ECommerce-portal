@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { UserContext } from './userContext'
 
 function NavbarDashboard() {
-  const {name} = useContext(UserContext);
+  const {user} = useContext(UserContext);
   return (
     
     <div>
@@ -14,7 +14,7 @@ function NavbarDashboard() {
             <div className="inline flex items-center justify-between">
               <img src={dummy} className="w-6 h-6 rounded-full cursor-pointer" alt="User Avatar" />
             </div>
-            <span className="hover:underline cursor-pointer">Welcome {name}!</span>
+            <span className="hover:underline cursor-pointer">Welcome {user.name}!</span>
           </div>
           
       </div>

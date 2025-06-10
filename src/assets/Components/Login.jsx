@@ -6,7 +6,7 @@ import { URL } from './url';
 import { UserContext } from './userContext';
 
 function Login() {
-  const { setName,userLogged,setUserLogged } = useContext(UserContext);
+  const { setName,userLogged,setUserLogged ,fetchUser} = useContext(UserContext);
   
   const Navigate = useNavigate();
   
@@ -67,6 +67,7 @@ function Login() {
 
       if (response.status === 200) {
         setUserLogged(true);
+        await fetchUser()
         setName(response.data.user.name);
         Navigate('/dashboard');
       }

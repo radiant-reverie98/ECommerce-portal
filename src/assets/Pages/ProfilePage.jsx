@@ -34,7 +34,7 @@ function ProfilePage() {
       if(response.status === 200){
         alert('Profile updated successfully!');
         
-        fetchUser(); // this will update context & Navbar
+        await fetchUser(); // this will update context & Navbar
 
 
       }
