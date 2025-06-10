@@ -6,6 +6,7 @@ const regUser = require('./Database/register.js')
 
 const cookieParser = require('cookie-parser');
 const authUser = require('./Routes/auth.js')
+const editUser = require('./Routes/edit.js')
 
 app.use(express.json());
 
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 
 app.use('/users',authUser);
+app.use('/edit',editUser);
 
 app.get('/cors',(req,res)=>{
   res.send('CORS enabled route');
