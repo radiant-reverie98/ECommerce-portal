@@ -5,10 +5,10 @@ import axios from 'axios';
 import { URL } from './url'; 
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { UserContext } from '../../App'
+import { UserContext } from './userContext';
 
-function SidebarDashboard({setUserLogged}) {
-  const { userLogged, setUserLogged: setUserLoggedContext } = useContext(UserContext);
+function SidebarDashboard() {
+  const { setUserLogged} = useContext(UserContext);
 
   const Navigate = useNavigate();
   const handleLogout = async () => {
@@ -17,7 +17,7 @@ function SidebarDashboard({setUserLogged}) {
         withCredentials: true
       })
       if(response.status === 200){
-        setUserLoggedContext(false); 
+        setUserLogged(false); 
         Navigate('/');
       }
 

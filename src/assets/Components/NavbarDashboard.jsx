@@ -1,7 +1,7 @@
 import React from 'react'
 import dummy from '../images/dummy-user.png'
 import { useContext } from 'react';
-import { UserContext } from '../../App' 
+import { UserContext } from './userContext'
 
 function NavbarDashboard() {
   const {name} = useContext(UserContext);
