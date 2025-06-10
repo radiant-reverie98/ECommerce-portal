@@ -7,7 +7,9 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ name: '', email: '', contact: '', city: '', state: '' });
-  const [userLogged, setUserLogged] = useState(false);
+  const [userLogged, setUserLogged] = useState(() => {
+  return localStorage.getItem("userLogged") === "true";
+});
   const [name, setName] = useState('');
 
   const fetchUser = async () => {
@@ -17,7 +19,7 @@ export const UserProvider = ({ children }) => {
       });
       if (response.status === 200) {
         setUser(response.data);
-        console.log("User fetched in context:", response.data);
+        //console.log("User fetched in context:", response.data);
       }
     } catch (err) {
       console.error("Error fetching user in context:", err);

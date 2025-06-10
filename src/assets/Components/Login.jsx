@@ -66,6 +66,8 @@ function Login() {
       );
 
       if (response.status === 200) {
+      localStorage.setItem("userLogged",true);
+
         setUserLogged(true);
         await fetchUser()
         setName(response.data.user.name);

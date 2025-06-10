@@ -7,11 +7,15 @@ import HomePage from "./assets/Pages/HomePage";
 import Dashboard from "./assets/Pages/Dashboard";
 import ProfilePage from "./assets/Pages/ProfilePage";
 import ProductList from "./assets/Pages/ProductList";
-
+import { useEffect } from 'react';
 import { useContext } from 'react';
 import { UserContext } from './assets/Components/userContext';
 
 function App() {
+  useEffect(() => {
+  const storedLoginStatus = localStorage.getItem("userLogged") === "true";
+  setUserLogged(storedLoginStatus);
+}, []);
   const { userLogged, setUserLogged } = useContext(UserContext);
 
   return (

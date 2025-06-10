@@ -26,7 +26,7 @@ app.get('/cors',(req,res)=>{
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Server running on port 3000....')
 })
 
 app.listen(port, () => {

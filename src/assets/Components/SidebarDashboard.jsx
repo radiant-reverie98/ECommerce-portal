@@ -17,7 +17,10 @@ function SidebarDashboard() {
         withCredentials: true
       })
       if(response.status === 200){
+        localStorage.removeItem("userLogged");
+
         setUserLogged(false); 
+
         Navigate('/');
       }
 
