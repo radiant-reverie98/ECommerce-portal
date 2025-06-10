@@ -108,7 +108,7 @@ function ProfilePage() {
               />
             </div>
 
-            {/* State & City Dropdowns */}
+           
             <div className="flex flex-wrap gap-3 items-center justify-center">
               {/* State */}
               <label className="block mb-2 text-xl font-medium text-gray-900">

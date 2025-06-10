@@ -7,7 +7,7 @@ function Table() {
       <main className="flex">
         
         <div className="m-10">
-          <table className=" w-230 rounded-lg overflow-hidden text-white">
+          <table className=" w-230 rounded-lg overflow-hidden text-black">
             <thead>
               <tr className="bg-[#7965C1]">
                 <th className="border border-gray-900 px-4 py-5 text-left">
@@ -31,7 +31,7 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   1
                 </td>
@@ -57,7 +57,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   2
                 </td>
@@ -83,7 +83,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   3
                 </td>
@@ -109,7 +109,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   4
                 </td>
@@ -135,7 +135,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   5
                 </td>
@@ -161,7 +161,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   6
                 </td>
@@ -187,7 +187,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   7
                 </td>
@@ -213,7 +213,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   8
                 </td>
@@ -239,7 +239,7 @@ function Table() {
                   </button>
                 </td>
               </tr>
-              <tr className="bg-[#E3D095]">
+              <tr className="bg-amber-100">
                 <td className="border border-gray-900 px-4 py-2 text-left">
                   9
                 </td>
