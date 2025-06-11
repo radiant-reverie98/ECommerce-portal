@@ -35,14 +35,14 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/profile" element={<ProfilePage />} />
             <Route path="/dashboard/listProduct" element={<ProductList />} />
-            <Route path="*" element={<Dashboard />} />
+            <Route path="*" element={<ServerErrorPage/>} />
           </>
         ) : (
           <>
             <Route path="/" element={<HomePage />} />
             <Route path="/loginUser" element={<Login setUserLogged={setUserLogged} />} />
             <Route path="/registerUser" element={<Register setUserLogged={setUserLogged} />} />
-            <Route path="*" element={<HomePage />} />
+            <Route path="*" element={<ServerErrorPage />} />
           </>
         )}
       </Routes>
