@@ -7,10 +7,14 @@ import earnImg from '../images/Earn more.webp'
 import hassle from '../images/Hassle.webp'
 import newSeller from '../images/New seller.webp'
 import parcel from '../images/istockphoto-1434715649-612x612.jpg'
+import { Helmet } from 'react-helmet' // For setting the page title
 
 function HomePage() {
   return (
     <div>
+      <Helmet>
+        <title>GrabNest | Home Page</title>
+      </Helmet>
       <Navbar/>
       <div className="h-[70%] bg-[#f6f1d7] flex justify-between">
         <div className="p-15">

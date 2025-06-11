@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NavbarDashboard from '../Components/NavbarDashboard';
 import SidebarDashboard from '../Components/SidebarDashboard';
+import { Helmet } from 'react-helmet';
 
 function ProductList() {
   const [images, setImages] = useState([]);
@@ -16,7 +17,11 @@ function ProductList() {
   };
 
   return (
+    
     <div className="min-h-screen bg-gray-100">
+      <Helmet>
+        <title>GrabNest - List Product</title>
+      </Helmet>
       <NavbarDashboard />
       <div className="flex">
         <SidebarDashboard />

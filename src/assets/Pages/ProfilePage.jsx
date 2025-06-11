@@ -5,6 +5,7 @@ import axios from "axios";
 import { URL } from "../Components/url";
 import { UserContext } from "../Components/userContext";
 import cityData from "../../assets/data/city.json";
+import { Helmet } from "react-helmet";
 
 function ProfilePage() {
   const [name, setName] = useState("");
@@ -55,6 +56,9 @@ function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+       <Helmet>
+        <title>GrabNest - Profile</title>
+      </Helmet>
       <NavbarDashboard />
       <div className="flex">
         <SidebarDashboard />
