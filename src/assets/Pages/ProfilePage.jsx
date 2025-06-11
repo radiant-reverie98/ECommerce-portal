@@ -4,7 +4,7 @@ import SidebarDashboard from "../Components/SidebarDashboard";
 import axios from "axios";
 import { URL } from "../Components/url";
 import { UserContext } from "../Components/userContext";
-import cityData from "../../assets/data/city.json"; // 👈 Your JSON file
+import cityData from "../../assets/data/city.json"; 
 
 function ProfilePage() {
   const [name, setName] = useState("");

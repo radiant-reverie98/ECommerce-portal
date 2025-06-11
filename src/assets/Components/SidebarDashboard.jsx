@@ -31,7 +31,7 @@ function SidebarDashboard() {
   }
   return (
     <div>
-      <div className="bg-[#0e5ab0] left-0 min-h-screen w-64 flex flex-col justify-between">
+      <div className="bg-[#0e5ab0] left-0 h-full w-64 flex flex-col justify-between">
         <div className="text-white text-lg font-semibold p-5">
           <h1 className="mb-4 text-semibold text-center">Dashboard</h1>
           <ul className="space-y-2">

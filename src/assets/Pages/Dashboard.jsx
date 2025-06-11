@@ -12,7 +12,7 @@ function Dashboard() {
       <div className="flex">
         <SidebarDashboard/>
       
-      <div className="flex justify-center items-center w-full h-screen   ">
+      <div className="flex justify-center items-center w-full h-screen mt-15 ">
         <Table/>
       </div>
   
