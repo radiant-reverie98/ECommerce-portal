@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import Login from "./assets/Components/Login";
 import Register from "./assets/Components/Register";
@@ -7,16 +8,24 @@ import HomePage from "./assets/Pages/HomePage";
 import Dashboard from "./assets/Pages/Dashboard";
 import ProfilePage from "./assets/Pages/ProfilePage";
 import ProductList from "./assets/Pages/ProductList";
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import ServerErrorPage from './assets/Pages/ServerErrorPage';
 import { UserContext } from './assets/Components/userContext';
 
 function App() {
-  useEffect(() => {
-  const storedLoginStatus = localStorage.getItem("userLogged") === "true";
-  setUserLogged(storedLoginStatus);
-}, []);
   const { userLogged, setUserLogged } = useContext(UserContext);
+  const [serverUp, setServerUp] = useState(true);
+
+  useEffect(() => {
+    const storedLoginStatus = localStorage.getItem("userLogged") === "true";
+    setUserLogged(storedLoginStatus);
+
+    // Check if backend is responding
+    axios.get("http://localhost:3000") // replace with your backend test endpoint
+      .then(() => setServerUp(true))
+      .catch(() => setServerUp(false));
+  }, []);
+
+  if (!serverUp) return <ServerErrorPage />;
 
   return (
     <div className="App">

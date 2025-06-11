@@ -100,6 +100,7 @@ function ProductList() {
               </label>
               <input
                 type="number"
+                min = "1"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                 placeholder="Enter MRP"
                 required
@@ -112,6 +113,7 @@ function ProductList() {
                 Selling Price
               </label>
               <input
+                min = "1"
                 type="number"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                 placeholder="Enter Selling Price"
