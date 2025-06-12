@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import NotExist from '../data/NotExist.json'
 import Lottie from 'lottie-react'
 
 function PageNotFound() {
+    
     const handleRetry = () => {
     window.location.reload();
     };
