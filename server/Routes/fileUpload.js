@@ -64,4 +64,30 @@ router.post('/uploadProduct', verifyToken, upload.array("image[]", 3), async (re
   }
 });
 
+
+// Get file upload data
+
+router.get("/getAllProducts", verifyToken, async (req, res) => {
+    const seller_id = req.userId
+    try{
+       const sql =  "SELECT product_id, product_title, selling_price, quantity FROM products WHERE seller_id = ?"
+       db.query(sql,[seller_id],(err,result)=>{
+        if(err){
+            console.error("Fetching error",err)
+            res.status(500).json({message:"Database error"})
+        }
+        return res.status(200).json({products:result,
+            length : result.length
+        })
+        
+       })
+
+    }catch(err){
+        console.error("err",err);
+        res.status(500).json({message:"Internal server error"})
+    }
+})
+  
+
+
 module.exports = router;
