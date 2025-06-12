@@ -143,5 +143,27 @@ router.get("/editSingleProduct/:id",verifyToken,async (req,res)=>{
 })
   
 
+// Delete product
+
+router.delete("/deleteSingleProduct/:id", verifyToken, (req, res) => {
+  const product_id = req.params.id;
+  const seller_id = req.userId;
+
+  const sql = `DELETE FROM products WHERE seller_id = ? AND product_id = ?`;
+
+  db.query(sql, [seller_id, product_id], (err, result) => {
+    if (err) {
+      console.log("Catching database error", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Product not found or unauthorized" });
+    }
+
+    return res.status(200).json({ message: "Product deleted successfully" });
+  });
+});
+
 
 module.exports = router;

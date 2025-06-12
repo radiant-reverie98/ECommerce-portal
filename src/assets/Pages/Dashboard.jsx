@@ -11,6 +11,27 @@ import { useNavigate } from 'react-router-dom'
 function Dashboard() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate()
+  
+const handleDelete = async (productId) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await axios.delete(`${URL}/upload/deleteSingleProduct/${productId}`, {
+      withCredentials: true,
+    });
+
+    alert(res.data.message);
+
+    // Optionally refresh the product list
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.product_id !== productId)
+    );
+  } catch (err) {
+    console.error("Delete failed:", err);
+    alert("Failed to delete product.");
+  }
+};
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -68,7 +89,7 @@ function Dashboard() {
                     <td className="px-6 py-4 text-sm border-b border-[#334155]">{product.quantity}</td>
                     <td className="px-6 py-4 text-sm border-b border-[#334155]">
                       <button className="text-blue-400 hover:underline mr-4 cursor-pointer" onClick={()=> navigate(`/dashboard/editProduct/${product.product_id}`)}>Edit</button>
-                      <button className="text-red-400 hover:underline cursor-pointer">Delete</button>
+                      <button className="text-red-400 hover:underline cursor-pointer" onClick={()=>handleDelete(product.product_id)}>Delete</button>
                     </td>
                   </tr>
                 ))
