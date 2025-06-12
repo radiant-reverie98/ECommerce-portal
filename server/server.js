@@ -2,7 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors');
 const port = 3000
-const regUser = require('./Database/register.js')
+const uploadProduct = require('./Routes/fileUpload.js')
+
 
 const cookieParser = require('cookie-parser');
 const authUser = require('./Routes/auth.js')
@@ -19,6 +20,8 @@ app.use(cors({
 
 app.use('/users',authUser);
 app.use('/edit',editUser);
+app.use('/uploads', express.static('uploads'));
+app.use('/upload',uploadProduct)
 
 app.get('/cors',(req,res)=>{
   res.send('CORS enabled route');
