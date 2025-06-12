@@ -2,7 +2,7 @@ import React from 'react'
 import dummy from '../images/dummy-user.png'
 import { useContext } from 'react';
 import { UserContext } from './userContext'
-
+import { Link } from 'react-router-dom';
 function NavbarDashboard() {
   const {user} = useContext(UserContext);
   return (
@@ -14,7 +14,7 @@ function NavbarDashboard() {
             <div className="inline flex items-center justify-between">
               <img src={dummy} className="w-6 h-6 rounded-full cursor-pointer" alt="User Avatar" />
             </div>
-            <span className="hover:underline cursor-pointer">Welcome {user.name}!</span>
+            <Link to="/dashboard/profile"><span className="hover:underline cursor-pointer">Welcome {user.name}!</span></Link>
           </div>
           
       </div>

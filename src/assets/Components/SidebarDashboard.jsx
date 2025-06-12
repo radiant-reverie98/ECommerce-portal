@@ -35,9 +35,9 @@ function SidebarDashboard() {
         <div className="text-white text-lg font-semibold p-5">
           <h1 className="mb-4 text-semibold text-center">Dashboard</h1>
           <ul className="space-y-2">
-            <li className="hover:bg-[#0c4a8b] p-2 rounded-md cursor-pointer text-center"><Link to="/dashboard">Home</Link></li>
+            <Link to="/dashboard"><li className="hover:bg-[#0c4a8b] p-2 rounded-md cursor-pointer text-center">Home</li></Link>
 
-            <li className="hover:bg-[#0c4a8b] p-2 rounded-md cursor-pointer text-center"><Link to="/dashboard/profile">Profile</Link></li>
+            <Link to="/dashboard/profile"><li className="hover:bg-[#0c4a8b] p-2 rounded-md cursor-pointer text-center">Profile</li></Link>
             
             <Link to="/dashboard/listProduct"><li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">List Product</li></Link>
             
