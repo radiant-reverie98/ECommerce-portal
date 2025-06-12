@@ -4,6 +4,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import {URL} from './url'; // Adjust the import path as necessary
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 function Register({setUserLogged}) {
      const Navigate = useNavigate();
      const [errors, setErrors] = useState({})
@@ -13,8 +14,8 @@ function Register({setUserLogged}) {
    
     if (!name.trim()) {
       errors.name = 'Name is required'
-    } else if (!/^[A-Za-z]{1,8}$/.test(name.trim())) {
-      errors.name = 'Name must be letters only and max 8 characters'
+    } else if (!/^[A-Za-z]{1,12}$/.test(name.trim())) {
+      errors.name = 'Name must be letters only and max 12 characters'
     }
 
     // Email: required, simple email regex
@@ -27,8 +28,8 @@ function Register({setUserLogged}) {
     
     if (!username.trim()) {
       errors.username = 'Username is required'
-    } else if (username.length < 6 || username.length > 8) {
-      errors.username = 'Username must be 6 to 8 characters long'
+    } else if (username.length < 6 || username.length > 12) {
+      errors.username = 'Username must be 6 to 12 characters long'
     } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(username)) {
       errors.username = 'Username must contain at least one special character'
     }
@@ -81,6 +82,9 @@ function Register({setUserLogged}) {
     
   return (
     <div className="flex justify-center items-center min-h-screen">
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
        <div className="w-96 bg-gray-50 shadow-lg rounded-lg ">
         <h1 className="text-2xl font-bold mb-4 text-center mt-3">REGISTER</h1>
         <form onSubmit={handleRegister}>

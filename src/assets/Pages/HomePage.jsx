@@ -27,24 +27,24 @@ function HomePage() {
         </div>
         </div>
         <div>
-          <img src={myImg} alt="HomePage" className="w-[465.89px] h-[350px] mt-10 ml-10 mr-10" />
+          <img src={myImg} alt="HomePage" className="  md:w-[465.89px] md:h-[350px] md:mt-10 md:ml-10 md:mr-10" />
         </div>
       </div>
       <div className="bg-gray-100 p-3">
         <h1 className="font-extrabold text-5xl text-center text-[#1c2e4a] word-spacing-tight">Get a head start to selling with us</h1>
-        <div className="flex mx-auto justify-center mt-10">
-          <div>
-            <img src={newSeller} className="w-[370px] h-[400px] transform transition-transform transition-shadow duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+        <div className="grid grid-col-1 md:grid md:grid-cols-3 mx-auto justify-center mt-10 ">
+          <div >
+            <img src={newSeller} className=" md:w-[370px] md:h-[400px] w-[300px] transform transition-transform transition-shadow duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
             hover:-translate-y-2 hover:scale-[1.03] 
             will-change-transform cursor-pointer"/>
           </div>
           <div>
-            <img src={hassle} className="w-[370px] h-[400px] transform transition-transform transition-shadow duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+            <img src={hassle} className="md:w-[370px] md:h-[400px] w-[300px] transform transition-transform transition-shadow duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
             hover:-translate-y-2 hover:scale-[1.03] 
             will-change-transform cursor-pointer"/>
           </div>
           <div>
-            <img src={earnImg} className="w-[370px] h-[400px] transform transition-transform transition-shadow duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+            <img src={earnImg} className="md:w-[370px] md:h-[400px] w-[300px] transform transition-transform transition-shadow duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
             hover:-translate-y-2 hover:scale-[1.03]
             will-change-transform cursor-pointer
             "/>
@@ -60,7 +60,7 @@ function HomePage() {
         </div>
         </div>
         <div>
-          <img src={parcel} className="h-[350px] rounded-lg"/>
+          <img src={parcel} className="md:h-[350px] rounded-lg"/>
         </div>
 
       </div>

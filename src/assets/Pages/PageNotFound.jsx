@@ -1,15 +1,15 @@
-import React from 'react';
-import Lottie from 'lottie-react';
-import NotExist from '../data/NotExist.json';
+import React from 'react'
+import NotExist from '../data/NotExist.json'
+import Lottie from 'lottie-react'
 
-
-function ServerErrorPage() {
-  const handleRetry = () => {
+function PageNotFound() {
+    const handleRetry = () => {
     window.location.reload();
-  };
-
+    };
   return (
-    <div className="flex flex-col items-center justify-center bg-white text-center h-screen overflow-hidden">
+    
+    <div>
+      <div className="flex flex-col items-center justify-center bg-white text-center h-screen overflow-hidden">
       <div className="w-full max-w-md">
         <Lottie animationData={NotExist} loop={true} />
       </div>
@@ -20,7 +20,8 @@ function ServerErrorPage() {
         Retry
       </button>
     </div>
-  );
+    </div>
+  )
 }
 
-export default ServerErrorPage;
+export default PageNotFound

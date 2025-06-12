@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { URL } from './url';
-
+import { Helmet } from 'react-helmet';
 import { UserContext } from './userContext';
 
 function Login() {
@@ -29,8 +29,8 @@ function Login() {
     if (!username.trim()) {
       setUsernameError('Username is required.');
       valid = false;
-    } else if (username.length < 6 || username.length > 8) {
-      setUsernameError('Username must be between 6 and 8 characters.');
+    } else if (username.length < 6 || username.length > 12) {
+      setUsernameError('Username must be between 6 and 12 characters.');
       valid = false;
     } else if (!specialCharRegex.test(username)) {
       setUsernameError('Username must include at least one special character.');
@@ -83,6 +83,9 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <div className="w-96 bg-gray-50 shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold mb-4 text-center mt-3">LOGIN</h1>
         <form onSubmit={handleLogin}>

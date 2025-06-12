@@ -7,6 +7,7 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ name: '', email: '', contact: '', city: '', state: '' });
+  const [loader,setLoader] = useState(false);
   const [userLogged, setUserLogged] = useState(() => {
   return localStorage.getItem("userLogged") === "true";
 });

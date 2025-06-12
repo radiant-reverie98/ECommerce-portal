@@ -87,6 +87,60 @@ router.get("/getAllProducts", verifyToken, async (req, res) => {
         res.status(500).json({message:"Internal server error"})
     }
 })
+
+
+// Building edit feature
+
+router.put("/editProduct/:id",verifyToken, async(req,res)=>{
+  const product_id = req.params.id
+  const seller_id = req.userId;
+  const {product_title,product_description,mrp,selling_price,quantity} = req.body;
+  try{
+    const sql =  `UPDATE products
+      SET product_title = ?,product_description = ?, selling_price = ?, MRP = ?, quantity = ? 
+      WHERE product_id = ? AND seller_id = ?`;
+    const values = [product_title,product_description,mrp,selling_price,quantity,product_id,seller_id];
+    db.query(sql,values,(err,result)=>{
+      if(err){
+        console.error("Catching error...",err);
+        return res.status(500).json({error:"Database error"})
+      }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "Product not found or unauthorized" });
+      }
+      return res.status(200).json(result)
+    })
+
+  }catch(err){
+    console.log("err",err);
+    return res.status(500).json({message:"Internal server error"})
+  }
+})
+
+
+router.get("/editSingleProduct/:id",verifyToken,async (req,res)=>{
+  const product_id = req.params.id;
+  const seller_id = req.userId;
+  
+  try{
+    
+    const sql = `SELECT product_title,product_description,selling_price,mrp,quantity FROM products WHERE product_id = ? AND seller_id = ?`
+    db.query(sql,[product_id,seller_id],(err,result)=>{
+      console.log(result)
+      if(err){
+        console.log("Fetching error",err);
+        return res.status(200).json({message:"Database error"})
+      }
+       if (result.length === 0) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.status(200).json({result});
+    })
+  }catch(err){
+    console.log("err",err);
+    res.status(500).json({message:"Internal server error"})
+  }
+})
   
 
 

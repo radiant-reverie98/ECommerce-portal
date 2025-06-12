@@ -1,97 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavbarDashboard from '../Components/NavbarDashboard';
 import SidebarDashboard from '../Components/SidebarDashboard';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { URL as BASE_URL } from '../Components/url';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function ProductList() {
-  const [images, setImages] = useState([]);
+function EditProduct() {
+  const { id } = useParams(); // product_id from URL
+
+ const navigate = useNavigate();
+
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [mrp, setMrp] = useState('');
   const [sellingPrice, setSellingPrice] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  const handleImageChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    const totalImages = [...images, ...selectedFiles].slice(0, 3);
-    setImages(totalImages);
-    console.log("Selected Images Count:", totalImages.length); // ✅ Accurate logging
-  };
+  useEffect(() => {
+    // Fetch product details to pre-fill form
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/upload/editSingleProduct/${id}`, {
+          withCredentials: true,
+        });
+        const product = res.data.result[0];
+        console.log(product)
+        setProductName(product.product_title || '');
+        setDescription(product.product_description || '');
+        setMrp(product.mrp || '');
+        setSellingPrice(product.selling_price || '');
+        setQuantity(product.quantity || '');
+      } catch (err) {
+        console.error("Failed to fetch product:", err);
+        alert("Failed to load product details.");
+      }
+    };
 
-  const removeImage = (indexToRemove) => {
-    const updatedImages = images.filter((_, index) => index !== indexToRemove);
-    setImages(updatedImages);
-  };
+    fetchProduct();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (images.length !== 3) {
-      alert("Please upload exactly 3 images.");
-      return;
-    }
-
     try {
-      const formData = new FormData();
-      images.forEach((image) => formData.append("image[]", image));
+      const updatedData = {
+        product_title: productName,
+        product_description: description,
+        mrp,
+        selling_price: sellingPrice,
+        quantity,
+      };
 
-      formData.append("product_title", productName);
-      formData.append("product_description", description);
-      formData.append("mrp", mrp);
-      formData.append("selling_price", sellingPrice);
-      formData.append("quantity", quantity);
+      await axios.put(`${BASE_URL}/upload/editProduct/${id}`, updatedData, {
+        withCredentials: true,
+      });
 
-      
-
-      
-
-      const res = await axios.post(
-        `${BASE_URL}/upload/uploadProduct`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      alert("Product listed successfully!");
-      console.log(res.data);
-
-      // Reset form
-      setProductName('');
-      setDescription('');
-      setMrp('');
-      setSellingPrice('');
-      setQuantity('');
-      setImages([]);
+      alert("Product updated successfully!");
+      navigate('/dashboard'); // Or wherever you want to go after editing
 
     } catch (err) {
-      console.error("Upload failed:", err);
-      if (err.response?.status === 401) {
-        alert("Unauthorized. Please log in again.");
-      } else {
-        alert("Failed to upload product.");
-      }
+      console.error("Update failed:", err);
+      alert("Failed to update product.");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Helmet>
-        <title>GrabNest - List Product</title>
+        <title>GrabNest - Edit Product</title>
       </Helmet>
       <NavbarDashboard />
       <div className="flex">
         <SidebarDashboard />
         <div className="w-full p-6">
-          <form className="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg" onSubmit={handleSubmit}>
+          <form className="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg" onSubmit={handleSubmit} >
             <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
-              List a Product
+              Edit Product
             </h1>
 
             {/* Product Name */}
@@ -118,45 +103,6 @@ function ProductList() {
                 placeholder="Enter product description"
                 required
               ></textarea>
-            </div>
-
-            {/* File Upload */}
-            <div className="mb-6">
-              <label className="block text-lg font-semibold text-gray-700 mb-2">Upload Images (exactly 3)</label>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleImageChange}
-                disabled={images.length > 3}
-                className="block w-full text-sm text-gray-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-lg file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-green-50 file:text-green-700
-                  hover:file:bg-green-100 cursor-pointer"
-              />
-              {images.length > 0 && (
-                <div className="flex gap-4 mt-4 flex-wrap">
-                  {images.map((file, index) => (
-                    <div key={index} className="relative">
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`upload-${index}`}
-                        className="w-28 h-28 object-cover rounded-lg shadow-md border"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-700"
-                        title="Remove"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
 
             {/* MRP */}
@@ -207,7 +153,7 @@ function ProductList() {
                 type="submit"
                 className="bg-green-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-green-700 transition duration-200 shadow-md"
               >
-                List Product
+                Update Product
               </button>
             </div>
           </form>
@@ -217,4 +163,4 @@ function ProductList() {
   );
 }
 
-export default ProductList;
+export default EditProduct;
