@@ -70,7 +70,7 @@ router.post('/uploadProduct', verifyToken, upload.array("image[]", 3), async (re
 router.get("/getAllProducts", verifyToken, async (req, res) => {
     const seller_id = req.userId
     try{
-       const sql =  "SELECT product_id, product_title, selling_price, quantity FROM products WHERE seller_id = ?"
+       const sql =  "SELECT product_id, product_title, selling_price,mrp, quantity FROM products WHERE seller_id = ?"
        db.query(sql,[seller_id],(err,result)=>{
         if(err){
             console.error("Fetching error",err)
@@ -99,7 +99,7 @@ router.put("/editProduct/:id",verifyToken, async(req,res)=>{
     const sql =  `UPDATE products
       SET product_title = ?,product_description = ?, selling_price = ?, MRP = ?, quantity = ? 
       WHERE product_id = ? AND seller_id = ?`;
-    const values = [product_title,product_description,mrp,selling_price,quantity,product_id,seller_id];
+    const values = [product_title,product_description,selling_price,mrp,quantity,product_id,seller_id];
     db.query(sql,values,(err,result)=>{
       if(err){
         console.error("Catching error...",err);
@@ -124,7 +124,7 @@ router.get("/editSingleProduct/:id",verifyToken,async (req,res)=>{
   
   try{
     
-    const sql = `SELECT product_title,product_description,selling_price,mrp,quantity FROM products WHERE product_id = ? AND seller_id = ?`
+    const sql = `SELECT product_title,product_description,mrp,selling_price,quantity FROM products WHERE product_id = ? AND seller_id = ?`
     db.query(sql,[product_id,seller_id],(err,result)=>{
       console.log(result)
       if(err){

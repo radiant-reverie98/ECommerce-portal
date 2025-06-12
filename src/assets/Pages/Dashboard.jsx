@@ -38,7 +38,7 @@ const handleDelete = async (productId) => {
         const res = await axios.get(`${URL}/upload/getAllProducts`, {
           withCredentials: true,
         });
-        console.log(res)
+        console.log(res.data.products)
         setProducts(res.data.products)
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -80,7 +80,7 @@ const handleDelete = async (productId) => {
               {products.length > 0 ? (
                 products.map((product, index) => (
                   <tr
-                    key={product.id}
+                    key={product.product_id}
                     className={index % 2 === 0 ? 'bg-[#1E293B]' : 'bg-[#1C2C3A]'}
                   >
                     <td className="px-6 py-4 text-sm border-b border-[#334155]">{index + 1}</td>
