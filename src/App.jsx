@@ -13,6 +13,8 @@ import { UserContext } from './assets/Components/userContext';
 import PageNotFound from './assets/Pages/PageNotFound';
 import EditProduct from './assets/Pages/EditProduct';
 import UserHomePage from './assets/Pages/UserHomePage';
+import LoginUser from './assets/Pages/LoginUser';
+import RegisterUser from './assets/Pages/RegisterUser';
 
 function App() {
   const { userLogged, setUserLogged } = useContext(UserContext);
@@ -51,6 +53,8 @@ function App() {
           </>
         )}
         <Route path = "/" element = {<UserHomePage/>}/>
+        <Route path = "/login" element = {<LoginUser/>}/>
+        <Route path = "/register" element = {<RegisterUser/>}/>
       </Routes>
     </div>
   );
