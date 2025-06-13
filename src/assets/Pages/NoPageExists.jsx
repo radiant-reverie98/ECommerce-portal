@@ -12,7 +12,7 @@ function NoPageExists() {
         <Lottie animationData={NotExist} loop={true} />
       </div>
       <button
-        onClick={() => userLogged ? window.location.href = "/dashboard" : window.location.href = "/"}
+        onClick={() => userLogged ? window.location.href = "/dashboard" : window.location.href = "/sellerHome"}
         className="mt-6 px-6 py-2 text-sm font-medium border border-gray-400 text-gray-700 rounded hover:bg-gray-100 transition duration-200"
       >
         Go back to Home

@@ -21,7 +21,7 @@ function SidebarDashboard() {
 
         setUserLogged(false); 
 
-        Navigate('/');
+        Navigate('/sellerHome');
       }
 
     }catch(err){

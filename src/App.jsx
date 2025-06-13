@@ -12,6 +12,7 @@ import ServerErrorPage from './assets/Pages/ServerErrorPage';
 import { UserContext } from './assets/Components/userContext';
 import PageNotFound from './assets/Pages/PageNotFound';
 import EditProduct from './assets/Pages/EditProduct';
+import UserHomePage from './assets/Pages/UserHomePage';
 
 function App() {
   const { userLogged, setUserLogged } = useContext(UserContext);
@@ -42,12 +43,14 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/" element={<HomePage />} />
+            
+            <Route path="/sellerHome" element={<HomePage />} />
             <Route path="/loginUser" element={<Login setUserLogged={setUserLogged} />} />
             <Route path="/registerUser" element={<Register setUserLogged={setUserLogged} />} />
             <Route path="*" element={<NoPageExists />} />
           </>
         )}
+        <Route path = "/" element = {<UserHomePage/>}/>
       </Routes>
     </div>
   );
