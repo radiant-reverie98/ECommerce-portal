@@ -117,7 +117,7 @@ function RegisterUser() {
         </form>
 
         <p className="font-semibold flex justify-center mb-2">
-          Already a seller?{" "}
+          Already have an account?{" "}
           <Link
             to="/login"
             className="text-blue-500 font-normal italic hover:underline hover:text-red-500 ml-1"

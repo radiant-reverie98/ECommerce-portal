@@ -13,13 +13,7 @@ function Dashboard() {
   const [sortAsc, setSortAsc] = useState(true);
   const navigate = useNavigate();
 
-  const handleSortByQuantity = () => {
-  const sorted = [...products].sort((a, b) => {
-    return sortAsc ? a.quantity - b.quantity : b.quantity - a.quantity;
-  });
-  setProducts(sorted);
-  setSortAsc(!sortAsc);
-};
+  
 
 
   const handleDelete = async (productId) => {
@@ -78,14 +72,7 @@ function Dashboard() {
                 <h1 className="text-3xl font-semibold text-white mb-6 text-center">
                   Product Inventory
                 </h1>
-                <div className="flex justify-end mb-4">
-                  <button
-                    onClick={handleSortByQuantity}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
-                  >
-                    Sort by Quantity {sortAsc ? "▲" : "▼"}
-                  </button>
-                </div>
+                
                 <table className="min-w-full table-auto border-collapse text-white">
                   <thead className="bg-[#334155]">
                     <tr>
