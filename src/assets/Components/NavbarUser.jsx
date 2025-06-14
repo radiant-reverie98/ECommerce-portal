@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function NavbarUser() {
   return (
     <div>
-      <div className="min-w-screen bg-white h-[75px] flex p-3 items-center justify-between shadows-2xl">
+      <div className="min-w-screen bg-white h-[75px] flex p-3 items-center justify-between shadows-2xl fixed  top-0 left-0 z-50">
         <Link to="/"><div className="text-2xl text-blue-600 font-bold ml-4 cursor-pointer">GrabNest</div></Link>
         <div className="flex items-center gap-1 bg-blue-50 p-2 rounded-lg w-90 ">
             <button className="text-gray-400 p-2 font-light w-fit rounded-lg cursor-pointer"><FaMagnifyingGlass /></button>
