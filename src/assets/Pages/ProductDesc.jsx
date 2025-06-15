@@ -43,7 +43,13 @@ function ProductDesc() {
     }
   };
 
-  if (!product) return <div className="pt-[100px] text-center text-xl font-semibold">Loading...</div>;
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#98568d] border-opacity-70"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">

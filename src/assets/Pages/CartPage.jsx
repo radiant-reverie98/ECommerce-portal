@@ -74,8 +74,8 @@ function CartPage() {
                   </div>
                   <button
                     onClick={() => deleteItem(item.product_id)}
-                    className="text-red-500 hover:text-red-600 transition-colors"
-                    title="Remove from cart"
+                    className="text-red-500 hover:text-red-600 transition-colors cursor-pointer"
+                    title="Remove from cart" 
                   >
                     <Trash2 />
                   </button>
@@ -89,6 +89,11 @@ function CartPage() {
             </div>
           </>
         )}
+      </div>
+      <div className="flex justify-center mt-4">
+        <button className="bg-green-600 hover:bg-green-500 rounded-lg p-4 text-xl text-white shadow cursor-pointer">
+        Proceed to buy
+      </button>
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ function App() {
   const { userLogged, setUserLogged } = useContext(UserContext);
   const [serverUp, setServerUp] = useState(true);
 
+
   useEffect(() => {
     const storedLoginStatus = localStorage.getItem("userLogged") === "true";
     setUserLogged(storedLoginStatus);

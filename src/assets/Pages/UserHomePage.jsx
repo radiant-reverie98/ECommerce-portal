@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function UserHomePage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [loading,setLoading] = useState(true);
   
 
   const fetchData = async () => {
@@ -14,6 +15,7 @@ function UserHomePage() {
       const response = await axios.get(`${URL}/buyer/homePage`);
       setProducts(response.data.result);
       console.log(response.data.result)
+      setLoading(false)
     } catch (err) {
       console.error("err", err);
     }
@@ -23,6 +25,14 @@ function UserHomePage() {
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#98568d] border-opacity-70"></div>
+      </div>
+    );
+  }
+  
   return (
     <div>
       <main className="bg-gray-100 min-h-screen pt-[90px]">
