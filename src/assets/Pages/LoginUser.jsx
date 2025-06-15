@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { URL } from "../Components/url";
+import { UserContext } from "../Components/userContext";
 
 function LoginUser() {
-  
+  const {setBuyerLogged} = useContext(UserContext)
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -57,6 +58,10 @@ function LoginUser() {
     if(!validate()) return
     try{
       const response = await axios.post((`${URL}/buyerAuth/loginBuyer`),{buyer_username : username , buyer_password : password},{withCredentials : true})
+      if (response.status === 200) {
+        localStorage.setItem("buyerLogged",true);
+      setBuyerLogged(true);
+      }
       console.log(response)
       alert("Logged in successfully")
       navigate("/")

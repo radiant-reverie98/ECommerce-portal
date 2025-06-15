@@ -7,7 +7,9 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ name: '', email: '', contact: '', city: '', state: '' });
-  const [loader,setLoader] = useState(false);
+  const [buyerLogged,setBuyerLogged] = useState(()=>{
+    return localStorage.getItem("buyerLooged") === "true";
+  })
   const [userLogged, setUserLogged] = useState(() => {
   return localStorage.getItem("userLogged") === "true";
 });

@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { UserContext } from './userContext';
 
 function Login() {
-  const { setName,userLogged,setUserLogged ,fetchUser} = useContext(UserContext);
+  const { setName,setUserLogged ,fetchUser} = useContext(UserContext);
   
   const Navigate = useNavigate();
   
