@@ -4,6 +4,7 @@ import NavbarUser from "../Components/NavbarUser";
 import { URL } from "../Components/url";
 import axios from "axios";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function ProductDesc() {
   const { id } = useParams();
@@ -15,9 +16,8 @@ function ProductDesc() {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(`${URL}/buyer/productDesc/${id}`);
-        const fetchedProduct = res.data.result[0]
+        const fetchedProduct = res.data.result[0];
         setProduct(fetchedProduct);
-        console.log(res.data.result[0].product_image1)
         setSelectedImage(fetchedProduct.product_image1);
       } catch (err) {
         console.error("Error fetching product:", err);
@@ -27,87 +27,118 @@ function ProductDesc() {
     fetchProduct();
   }, [id]);
 
-  const increaseQty = () => setQuantity(prev => (prev >= product.quantity ? product.quantity : prev+1));
-  const decreaseQty = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  const increaseQty = () => setQuantity((prev) => (prev >= product.quantity ? product.quantity : prev + 1));
+  const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  if (!product) return <div className="pt-[100px] text-center">Loading...</div>;
+  const sendToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${URL}/cart/addToCart`,
+        { product_id : id, quantity },
+        { withCredentials: true }
+      );
+      console.log(response);
+    } catch (err) {
+      console.error("err", err);
+    }
+  };
+
+  if (!product) return <div className="pt-[100px] text-center text-xl font-semibold">Loading...</div>;
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <NavbarUser />
-      <div className="pt-[100px] max-w-7xl mx-auto flex flex-col md:flex-row gap-10 px-4 md:px-10">
-        {/* Left Side */}
-        <div className="w-full md:w-1/2">
-          <div className="border-gray-100 shadow-md rounded-lg overflow-hidden">
-            <img
-              src={`${URL}/uploads/${selectedImage}`}
-              alt="Main"
-              className="w-full h-[400px] object-contain"
-            />
-          </div>
-          <div className="flex justify-center gap-4 mt-4">
-            {[product.product_image1, product.product_image2, product.product_image3].map((img, idx) => (
+      <div className="pt-[100px] max-w-7xl mx-auto px-4 md:px-10 pb-12">
+        <div className="flex flex-col md:flex-row gap-12 items-start">
+          {/* Left Side */}
+          <div className="w-full md:w-1/2 space-y-4">
+            <div className="bg-white shadow-lg rounded-xl p-4">
               <img
-                key={idx}
-                src={`${URL}/uploads/${img}`}
-                onClick={() => setSelectedImage(img)}
-                className={`w-20 h-20 object-cover border=gray-50 shadow-md mt-4 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 ${
-                  selectedImage === img ? "ring-2 ring-blue-500" : ""
-                }`}
-                alt={`Thumbnail ${idx + 1}`}
+                src={`${URL}/uploads/${selectedImage}`}
+                alt="Main"
+                className="w-full h-[420px] object-contain rounded-lg"
               />
-            ))}
+            </div>
+            <div className="flex justify-start gap-4">
+              {[product.product_image1, product.product_image2, product.product_image3].map((img, idx) => (
+                <img
+                  key={idx}
+                  src={`${URL}/uploads/${img}`}
+                  onClick={() => setSelectedImage(img)}
+                  className={`w-20 h-20 object-cover rounded-lg border-2 cursor-pointer transition hover:scale-105 ${
+                    selectedImage === img ? "border-blue-500 ring-2 ring-blue-200" : "border-transparent"
+                  }`}
+                  alt={`Thumbnail ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Right Side */}
-        <div className="w-full md:w-1/2 space-y-6">
-          <h1 className="text-3xl font-bold text-gray-800">{product.product_title}</h1>
-          <p className="text-gray-500 font-serif">{product.product_description || "No description provided."}</p>
+          {/* Right Side */}
+          <div className="w-full md:w-1/2 bg-white shadow-xl rounded-xl p-6 space-y-6 sticky top-28">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 leading-tight">{product.product_title}</h1>
+            <p className="text-gray-600">{product.product_description || "No description available."}</p>
 
-          <div className="flex items-center gap-4 mt-6 border-gray-100 w-fit rounded-lg bg-yellow-100 ">
-            <button
-              className="p-2 bg-gray-200 rounded hover:bg-gray-300"
-              onClick={decreaseQty}
-            >
-              <FaMinus />
-            </button>
-            <span className="text-lg font-medium">{quantity}</span>
-            <button
-              className="p-2 bg-gray-200 rounded hover:bg-gray-300"
-              onClick={increaseQty}
-            >
-              <FaPlus />
-            </button>
-
-            
-          </div>
-          <div className="flex gap-3">
-                <span className={  `text-gray-500 ${product.mrp === product.selling_price ? 'hidden' : ' '}  text-2xl line-through hover:line-through`}>₹{product.mrp}</span>
-                <span className="text-2xl text-green-600 hover:underline ">₹{product.selling_price}</span>
+            {/* Pricing */}
+            <div className="flex gap-3 items-center mt-2">
+              {product.mrp !== product.selling_price && (
+                <span className="text-xl text-gray-400 line-through">₹{product.mrp}</span>
+              )}
+              <span className="text-2xl font-semibold text-green-600">₹{product.selling_price}</span>
             </div>
 
-          <div className="flex gap-6 mt-8">
-            <button disabled = {product.quantity === 0} className={`${product.quantity === 0 ?'bg-gray-400 cursor-not-allowed' :'bg-yellow-500 hover:bg-yellow-600 cursor-pointer'} text-white px-6 py-3 rounded-lg font-medium shadow-lg transition`}>
-              {product.quantity === 0? 'Out Of Stock' : 'Proceed to buy'}
-            </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium shadow-lg transition">
-              Add to Cart
-            </button>
+            {/* Quantity */}
+            <div className="flex items-center gap-4 mt-4 bg-gray-100 rounded-lg px-4 py-2 w-fit shadow-sm">
+              <button
+                onClick={decreaseQty}
+                className="p-2 rounded-md bg-white hover:bg-gray-200 transition"
+              >
+                <FaMinus />
+              </button>
+              <span className="text-lg font-medium">{quantity}</span>
+              <button
+                onClick={increaseQty}
+                className="p-2 rounded-md bg-white hover:bg-gray-200 transition"
+              >
+                <FaPlus />
+              </button>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex gap-4 flex-wrap mt-6">
+              <button
+                disabled={product.quantity === 0}
+                className={`${
+                  product.quantity === 0
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-yellow-500 hover:bg-yellow-600"
+                } text-white px-6 py-3 rounded-lg font-semibold shadow-md transition`}
+              >
+                {product.quantity === 0 ? "Out Of Stock" : "Proceed to Buy"}
+              </button>
+              <Link to = "/cart"><button
+                onClick={sendToCart}
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white px-6 py-3 rounded-lg font-semibold shadow-md transition"
+              >
+                Add to Cart
+              </button></Link>
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-full bg-[#202a44] flex mt-4 p-7 text-white flex justify-between items-center">
-          <h1 className="text-3xl font-bold cursor-pointer">GrabNest</h1>
-          <div className="gap-5 flex justify-around">
-            <span className="cursor-pointer">Confidentiality</span>
-            <span className="cursor-pointer">Terms of Use</span>
-            <span className="cursor-pointer">Cookies</span>
+
+      {/* Footer */}
+      <footer className="bg-[#202a44] text-white py-6 px-4 mt-12">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <h1 className="text-xl font-bold cursor-pointer">GrabNest</h1>
+          <div className="flex gap-6 text-sm md:text-base">
+            <span className="cursor-pointer hover:underline">Confidentiality</span>
+            <span className="cursor-pointer hover:underline">Terms of Use</span>
+            <span className="cursor-pointer hover:underline">Cookies</span>
           </div>
-          <p className="cursor-pointer">
-            © GrabNest.in 2025,All rights reserved
-          </p>
+          <p className="text-sm text-gray-300">© GrabNest.in 2025, All rights reserved</p>
         </div>
+      </footer>
     </div>
   );
 }

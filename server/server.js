@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const authUser = require('./Routes/auth.js')
 const editUser = require('./Routes/edit.js')
 const buyer_auth = require('./Routes/buyer_auth.js')
+const cart = require('./Routes/cart.js')
 
 app.use(express.json());
 
@@ -25,7 +26,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/upload',uploadProduct)
 app.use('/buyer',homePage)
 app.use('/buyerAuth',buyer_auth)
-
+app.use('/cart',cart)
 
 app.use('/upload', express.static(path.join(__dirname, 'uploads')));
 

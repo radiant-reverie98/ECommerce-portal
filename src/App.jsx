@@ -16,6 +16,7 @@ import UserHomePage from './assets/Pages/UserHomePage';
 import LoginUser from './assets/Pages/LoginUser';
 import RegisterUser from './assets/Pages/RegisterUser';
 import ProductDesc from './assets/Pages/ProductDesc';
+import CartPage from './assets/Pages/CartPage';
 
 function App() {
   const { userLogged, setUserLogged } = useContext(UserContext);
@@ -57,6 +58,7 @@ function App() {
         <Route path = "/login" element = {<LoginUser/>}/>
         <Route path = "/register" element = {<RegisterUser/>}/>
         <Route path = "/product-desc/:id" element = {<ProductDesc/>}/>
+        <Route path = "/cart" element={<CartPage/>}/>
       </Routes>
     </div>
   );

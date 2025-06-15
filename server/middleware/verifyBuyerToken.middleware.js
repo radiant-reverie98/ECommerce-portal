@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 
 const verifyBuyerToken = (req,res,next) =>{
-    let token = req.cookies.token;
+    let token = req.cookies.buyer_token;
 
     if (!token) {
     return res.status(401).json({ message: 'Unauthorized - token missing' });

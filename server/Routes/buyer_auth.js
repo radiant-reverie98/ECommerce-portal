@@ -37,7 +37,7 @@ router.post("/registerBuyer", async (req, res) => {
           { expiresIn: "1h" }
         );
 
-        res.cookie("token", token, {
+        res.cookie("buyer_token", token, {
           httpOnly: true,
           maxAge: 3600000,
           secure: process.env.NODE_ENV === "production",
@@ -66,8 +66,8 @@ router.post('/loginBuyer',async(req,res)=>{
       const user = result[0];
       const isMatch = await bcrypt.compare(buyer_password, user.buyer_password);
       if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
-      const token = jwt.sign({ id: user.buyer_id, username: user.buyer_username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      res.cookie('token', token, {
+      const token = jwt.sign({ id: user.buyer_id, username: user.buyer_username }, process.env.JWT_BUYER_SECRET, { expiresIn: '1h' });
+      res.cookie('buyer_token', token, {
         httpOnly: true,
         maxAge: 3600000,
         secure: process.env.NODE_ENV === 'production',
@@ -97,7 +97,7 @@ router.post('/loginBuyer',async(req,res)=>{
 
 router.get('/logoutBuyer', (req, res) => {
   try {
-    res.clearCookie('token', {
+    res.clearCookie('buyer_token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax'
