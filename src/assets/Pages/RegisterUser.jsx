@@ -2,6 +2,9 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { URL } from "../Components/url";
+
 
 function RegisterUser() {
   const [errors, setErrors] = useState({});
@@ -47,6 +50,18 @@ function RegisterUser() {
     return Object.keys(errors).length === 0;
   };
 
+  const handleRegister = async(e) =>{
+    e.preventDefault();
+    if(!validate()) return;
+    try{
+      const res = axios.post(`${URL}/`)
+    }catch(err){
+      console.error("Error signing up",err)
+
+    }
+
+  }
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Helmet>
@@ -54,7 +69,7 @@ function RegisterUser() {
       </Helmet>
       <div className="w-96 bg-gray-50 shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold mb-4 text-center mt-3">REGISTER</h1>
-        <form>
+        <form onSubmit = {handleRegister}>
           <div className="mt-3 mx-auto">
             <label className="block mx-4 font-medium text-gray-700">Name</label>
             <input

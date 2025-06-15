@@ -27,7 +27,7 @@ function ProductDesc() {
     fetchProduct();
   }, [id]);
 
-  const increaseQty = () => setQuantity(prev => prev + 1);
+  const increaseQty = () => setQuantity(prev => (prev >= product.quantity ? product.quantity : prev+1));
   const decreaseQty = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
   if (!product) return <div className="pt-[100px] text-center">Loading...</div>;
@@ -38,7 +38,7 @@ function ProductDesc() {
       <div className="pt-[100px] max-w-7xl mx-auto flex flex-col md:flex-row gap-10 px-4 md:px-10">
         {/* Left Side */}
         <div className="w-full md:w-1/2">
-          <div className="border rounded-lg overflow-hidden">
+          <div className="border-gray-100 shadow-md rounded-lg overflow-hidden">
             <img
               src={`${URL}/uploads/${selectedImage}`}
               alt="Main"
@@ -51,7 +51,7 @@ function ProductDesc() {
                 key={idx}
                 src={`${URL}/uploads/${img}`}
                 onClick={() => setSelectedImage(img)}
-                className={`w-20 h-20 object-cover border rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 ${
+                className={`w-20 h-20 object-cover border=gray-50 shadow-md mt-4 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 ${
                   selectedImage === img ? "ring-2 ring-blue-500" : ""
                 }`}
                 alt={`Thumbnail ${idx + 1}`}
@@ -63,9 +63,9 @@ function ProductDesc() {
         {/* Right Side */}
         <div className="w-full md:w-1/2 space-y-6">
           <h1 className="text-3xl font-bold text-gray-800">{product.product_title}</h1>
-          <p className="text-gray-600">{product.product_description || "No description provided."}</p>
+          <p className="text-gray-500 font-serif">{product.product_description || "No description provided."}</p>
 
-          <div className="flex items-center gap-4 mt-6">
+          <div className="flex items-center gap-4 mt-6 border-gray-100 w-fit rounded-lg bg-yellow-100 ">
             <button
               className="p-2 bg-gray-200 rounded hover:bg-gray-300"
               onClick={decreaseQty}
@@ -79,11 +79,17 @@ function ProductDesc() {
             >
               <FaPlus />
             </button>
+
+            
           </div>
+          <div className="flex gap-3">
+                <span className={  `text-gray-500 ${product.mrp === product.selling_price ? 'hidden' : ' '}  text-2xl line-through hover:line-through`}>₹{product.mrp}</span>
+                <span className="text-2xl text-green-600 hover:underline ">₹{product.selling_price}</span>
+            </div>
 
           <div className="flex gap-6 mt-8">
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium shadow-lg transition">
-              Proceed to Buy
+            <button disabled = {product.quantity === 0} className={`${product.quantity === 0 ?'bg-gray-400 cursor-not-allowed' :'bg-yellow-500 hover:bg-yellow-600 cursor-pointer'} text-white px-6 py-3 rounded-lg font-medium shadow-lg transition`}>
+              {product.quantity === 0? 'Out Of Stock' : 'Proceed to buy'}
             </button>
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium shadow-lg transition">
               Add to Cart
@@ -91,6 +97,17 @@ function ProductDesc() {
           </div>
         </div>
       </div>
+      <div className="w-full bg-[#202a44] flex mt-4 p-7 text-white flex justify-between items-center">
+          <h1 className="text-3xl font-bold cursor-pointer">GrabNest</h1>
+          <div className="gap-5 flex justify-around">
+            <span className="cursor-pointer">Confidentiality</span>
+            <span className="cursor-pointer">Terms of Use</span>
+            <span className="cursor-pointer">Cookies</span>
+          </div>
+          <p className="cursor-pointer">
+            © GrabNest.in 2025,All rights reserved
+          </p>
+        </div>
     </div>
   );
 }

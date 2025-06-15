@@ -178,7 +178,7 @@ function ProductList() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Selling Price</label>
               <input
                 type="number"
-                min="1"
+                min="0"
                 value={sellingPrice}
                 onChange={(e) => setSellingPrice(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"

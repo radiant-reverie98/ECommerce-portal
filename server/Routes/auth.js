@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../Database/register.js');
 
-// ✅ Register User
+// Register User
 router.post('/registerUser', async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
@@ -25,7 +25,7 @@ router.post('/registerUser', async (req, res) => {
 
         const userId = result.insertId;
 
-        // ✅ Generate JWT with user ID
+        //  Generate JWT with user ID
         const token = jwt.sign({ id: userId, username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Set token in cookie
@@ -54,7 +54,7 @@ router.post('/registerUser', async (req, res) => {
   }
 });
 
-// ✅ Login User
+//  Login User
 router.post('/loginUser', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -96,7 +96,7 @@ router.post('/loginUser', async (req, res) => {
   }
 });
 
-// ✅ Logout User
+//  Logout User
 router.get('/logoutUser', (req, res) => {
   try {
     res.clearCookie('token', {
