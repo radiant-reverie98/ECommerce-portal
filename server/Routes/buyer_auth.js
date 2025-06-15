@@ -55,7 +55,7 @@ router.post("/registerBuyer", async (req, res) => {
 
 // Login buyer
 
-router.post('/loginBuyer',verifyBuyerToken,async(req,res)=>{
+router.post('/loginBuyer',async(req,res)=>{
   try{
     const {buyer_username,buyer_password} = req.body;
     const sql = `SELECT * FROM buyer WHERE buyer_username = ?`

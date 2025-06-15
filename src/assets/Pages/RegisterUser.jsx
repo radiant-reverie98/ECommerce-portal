@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { URL } from "../Components/url";
 
@@ -12,6 +12,8 @@ function RegisterUser() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate()
 
   const validate = () => {
     const errors = {};
@@ -54,9 +56,13 @@ function RegisterUser() {
     e.preventDefault();
     if(!validate()) return;
     try{
-      const res = axios.post(`${URL}/`)
+      const res = await axios.post((`${URL}/buyerAuth/registerBuyer`),{buyer_name:name,buyer_username:username ,buyer_email:email,buyer_password:password},{withCredentials : true})
+      console.log(res)
+      alert("Registered successfully")
+      navigate("/login")
     }catch(err){
       console.error("Error signing up",err)
+      alert("Error signing up. Please try again later")
 
     }
 

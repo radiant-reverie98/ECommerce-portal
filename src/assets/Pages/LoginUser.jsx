@@ -1,7 +1,9 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { URL } from "../Components/url";
 
 function LoginUser() {
   
@@ -12,7 +14,7 @@ function LoginUser() {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [serverError, setServerError] = useState("");
-
+  const navigate = useNavigate()
   
   const validate = () => {
     let valid = true;
@@ -20,7 +22,7 @@ function LoginUser() {
     setPasswordError("");
     setServerError("");
 
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    const specialCharRegex = /[!@#$%^&*(),._?":{}|<>]/;
 
     if (!username.trim()) {
       setUsernameError("Username is required.");
@@ -49,6 +51,22 @@ function LoginUser() {
 
     return valid;
   };
+
+  const handleLogin = async(e) => {
+    e.preventDefault()
+    if(!validate()) return
+    try{
+      const response = await axios.post((`${URL}/buyerAuth/loginBuyer`),{buyer_username : username , buyer_password : password},{withCredentials : true})
+      console.log(response)
+      alert("Logged in successfully")
+      navigate("/")
+
+    }
+    catch(err){
+      console.error("err",err)
+      alert("Error logging in . Please try again later")
+    }
+  }
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Helmet>
@@ -56,7 +74,7 @@ function LoginUser() {
       </Helmet>
       <div className="w-96 bg-gray-50 shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold mb-4 text-center mt-3">LOGIN</h1>
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mt-3 mx-auto">
             <label className="block mx-4 font-medium text-gray-700">
               Username

@@ -11,13 +11,13 @@ function ProductList() {
   const [description, setDescription] = useState('');
   const [mrp, setMrp] = useState('');
   const [sellingPrice, setSellingPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
   const handleImageChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     const totalImages = [...images, ...selectedFiles].slice(0, 3);
     setImages(totalImages);
-    console.log("Selected Images Count:", totalImages.length); // ✅ Accurate logging
+    console.log("Selected Images Count:", totalImages.length); 
   };
 
   const removeImage = (indexToRemove) => {
@@ -178,7 +178,7 @@ function ProductList() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Selling Price</label>
               <input
                 type="number"
-                min="0"
+                
                 value={sellingPrice}
                 onChange={(e) => setSellingPrice(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
@@ -192,9 +192,9 @@ function ProductList() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Quantity</label>
               <input
                 type="number"
-                min="0"
+                min = "0"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(Number(e.target.value))}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                 placeholder="Enter Quantity"
                 required
