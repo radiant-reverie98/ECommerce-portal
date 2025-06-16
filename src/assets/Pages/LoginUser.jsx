@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { URL } from "../Components/url";
 import { UserContext } from "../Components/userContext";
+import toast, { Toaster } from "react-hot-toast";
+
 
 function LoginUser() {
   const {setBuyerLogged} = useContext(UserContext)
@@ -63,7 +65,7 @@ function LoginUser() {
         setBuyerLogged(true);
       }
       console.log(response)
-      alert("Logged in successfully")
+      toast.success("Welcome to GrabNest!")
       navigate("/")
 
     }
@@ -74,6 +76,8 @@ function LoginUser() {
   }
   return (
     <div className="flex justify-center items-center min-h-screen">
+      <Toaster position="top-center" />
+      
       <Helmet>
         <title>Login</title>
       </Helmet>

@@ -8,14 +8,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 function EditProduct() {
   const { id } = useParams(); // product_id from URL
-
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [mrp, setMrp] = useState('');
   const [sellingPrice, setSellingPrice] = useState('');
   const [quantity, setQuantity] = useState(0);
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     // Fetch product details to pre-fill form
@@ -31,6 +31,7 @@ function EditProduct() {
         setMrp(product.mrp || '');
         setSellingPrice(product.selling_price || '');
         setQuantity(product.quantity || '');
+        setCategory(product.category || '');
       } catch (err) {
         console.error("Failed to fetch product:", err);
         alert("Failed to load product details.");
@@ -50,6 +51,7 @@ function EditProduct() {
         mrp,
         selling_price: sellingPrice,
         quantity,
+        category,
       };
 
       await axios.put(`${BASE_URL}/upload/editProduct/${id}`, updatedData, {
@@ -57,8 +59,7 @@ function EditProduct() {
       });
 
       alert("Product updated successfully!");
-      navigate('/dashboard'); // Or wherever you want to go after editing
-
+      navigate('/dashboard');
     } catch (err) {
       console.error("Update failed:", err);
       alert("Failed to update product.");
@@ -105,12 +106,32 @@ function EditProduct() {
               ></textarea>
             </div>
 
+            {/* Category */}
+            <div className="mb-6">
+              <label className="block text-lg font-semibold text-gray-700 mb-2">Category</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                required
+              >
+                <option value="">Select a category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Books">Books</option>
+                <option value="Home">Home</option>
+                <option value="Toys">Toys</option>
+                <option value="Essentials">Essentials</option>
+
+
+              </select>
+            </div>
+
             {/* MRP */}
             <div className="mb-6">
               <label className="block text-lg font-semibold text-gray-700 mb-2">MRP</label>
               <input
                 type="number"
-                
                 value={mrp}
                 onChange={(e) => setMrp(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
@@ -124,7 +145,6 @@ function EditProduct() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Selling Price</label>
               <input
                 type="number"
-                
                 value={sellingPrice}
                 onChange={(e) => setSellingPrice(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
@@ -138,8 +158,6 @@ function EditProduct() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Quantity</label>
               <input
                 type="number"
-                
-                
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"

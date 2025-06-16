@@ -40,7 +40,7 @@ function SidebarDashboard() {
             <Link to="/dashboard/profile"><li className="hover:bg-[#0c4a8b] p-2 rounded-md cursor-pointer text-center">Profile</li></Link>
             
             <Link to="/dashboard/listProduct"><li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">List Product</li></Link>
-            
+            <li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">Track Order</li>
             <li className="hover:bg-red-500 p-2 rounded cursor-pointer text-center " onClick={handleLogout}>Logout</li>
           </ul>
         </div>

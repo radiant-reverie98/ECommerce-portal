@@ -9,6 +9,7 @@ router.post('/uploadProduct', verifyToken, upload.array("image[]", 3), async (re
     const {
       product_title,
       product_description,
+      category,
       mrp,
       selling_price,
       quantity
@@ -28,14 +29,15 @@ router.post('/uploadProduct', verifyToken, upload.array("image[]", 3), async (re
 
     const query = `
       INSERT INTO products 
-        (seller_id, product_title, product_description, product_image1, product_image2, product_image3, mrp, selling_price, quantity)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (seller_id, product_title, product_description,category, product_image1, product_image2, product_image3, mrp, selling_price, quantity)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)
     `;
 
     await db.execute(query, [
       seller_id,
       product_title,
       product_description,
+      category,
       img1,
       img2,
       img3,
@@ -70,7 +72,7 @@ router.post('/uploadProduct', verifyToken, upload.array("image[]", 3), async (re
 router.get("/getAllProducts", verifyToken, async (req, res) => {
     const seller_id = req.userId
     try{
-       const sql =  "SELECT product_id, product_title, selling_price,mrp, quantity FROM products WHERE seller_id = ?"
+       const sql =  "SELECT product_id, product_title, selling_price,mrp,category, quantity FROM products WHERE seller_id = ?"
        db.query(sql,[seller_id],(err,result)=>{
         if(err){
             console.error("Fetching error",err)
@@ -94,12 +96,12 @@ router.get("/getAllProducts", verifyToken, async (req, res) => {
 router.put("/editProduct/:id",verifyToken, async(req,res)=>{
   const product_id = req.params.id
   const seller_id = req.userId;
-  const {product_title,product_description,mrp,selling_price,quantity} = req.body;
+  const {product_title,product_description,category,mrp,selling_price,quantity} = req.body;
   try{
     const sql =  `UPDATE products
-      SET product_title = ?,product_description = ?, selling_price = ?, MRP = ?, quantity = ? 
+      SET product_title = ?,product_description = ?,category = ? , selling_price = ?, MRP = ?, quantity = ? 
       WHERE product_id = ? AND seller_id = ?`;
-    const values = [product_title,product_description,selling_price,mrp,quantity,product_id,seller_id];
+    const values = [product_title,product_description,category,selling_price,mrp,quantity,product_id,seller_id];
     db.query(sql,values,(err,result)=>{
       if(err){
         console.error("Catching error...",err);

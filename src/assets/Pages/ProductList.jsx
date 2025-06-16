@@ -4,6 +4,7 @@ import SidebarDashboard from '../Components/SidebarDashboard';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { URL as BASE_URL } from '../Components/url';
+import categoryList from '../data/category.json'; // import categories
 
 function ProductList() {
   const [images, setImages] = useState([]);
@@ -12,12 +13,12 @@ function ProductList() {
   const [mrp, setMrp] = useState('');
   const [sellingPrice, setSellingPrice] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [category, setCategory] = useState('');
 
   const handleImageChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     const totalImages = [...images, ...selectedFiles].slice(0, 3);
     setImages(totalImages);
-    console.log("Selected Images Count:", totalImages.length); 
   };
 
   const removeImage = (indexToRemove) => {
@@ -36,16 +37,12 @@ function ProductList() {
     try {
       const formData = new FormData();
       images.forEach((image) => formData.append("image[]", image));
-
       formData.append("product_title", productName);
       formData.append("product_description", description);
       formData.append("mrp", mrp);
       formData.append("selling_price", sellingPrice);
       formData.append("quantity", quantity);
-
-      
-
-      
+      formData.append("category", category); 
 
       const res = await axios.post(
         `${BASE_URL}/upload/uploadProduct`,
@@ -53,7 +50,6 @@ function ProductList() {
         {
           withCredentials: true,
           headers: {
-            
             "Content-Type": "multipart/form-data",
           },
         }
@@ -62,14 +58,13 @@ function ProductList() {
       alert("Product listed successfully!");
       console.log(res.data);
 
-      // Reset form
       setProductName('');
       setDescription('');
       setMrp('');
       setSellingPrice('');
-      setQuantity('');
+      setQuantity(1);
       setImages([]);
-
+      setCategory('');
     } catch (err) {
       console.error("Upload failed:", err);
       if (err.response?.status === 401) {
@@ -118,6 +113,22 @@ function ProductList() {
                 placeholder="Enter product description"
                 required
               ></textarea>
+            </div>
+
+            {/* Category Dropdown */}
+            <div className="mb-6">
+              <label className="block text-lg font-semibold text-gray-700 mb-2">Category</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+                required
+              >
+                <option value="" disabled>Select category</option>
+                {categoryList.map((cat, index) => (
+                  <option key={index} value={cat}>{cat}</option>
+                ))}
+              </select>
             </div>
 
             {/* File Upload */}
@@ -178,7 +189,6 @@ function ProductList() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Selling Price</label>
               <input
                 type="number"
-                
                 value={sellingPrice}
                 onChange={(e) => setSellingPrice(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
@@ -192,7 +202,7 @@ function ProductList() {
               <label className="block text-lg font-semibold text-gray-700 mb-2">Quantity</label>
               <input
                 type="number"
-                min = "0"
+                min="0"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
