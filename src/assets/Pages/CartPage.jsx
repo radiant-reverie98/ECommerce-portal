@@ -5,12 +5,14 @@ import NavbarUser from '../Components/NavbarUser';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../Components/userContext';
 import { Helmet } from 'react-helmet-async';
+import {URL} from '../Components/url';
 
 function CartPage() {
+  const {setShowConfetti,setCheckOutPrice,checkOutPrice} = useContext(UserContext)
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const {setCheckOutPrice} = useContext(UserContext)
+  
 
   const fetchCart = async () => {
     try {
@@ -18,6 +20,7 @@ function CartPage() {
         withCredentials: true,
       });
       setCartItems(res.data.message);
+      setShowConfetti(true)
       
     } catch (err) {
       console.error('Error fetching cart:', err);
@@ -40,17 +43,28 @@ function CartPage() {
   // Sending the cart to orders
 
   const sendCartToOrders = async () =>{
-    const response = await axios.post(``)
+    try{
+      const response = await axios.post(`${URL}/orders/sendCartToOrders`,{cartItems},{withCredentials: true});
+      console.log(response)
+    }catch(err){
+      console.error("Error sending cart to orders:", err);
+    }
+
   }
 
 
-  const totalPrice = cartItems.reduce((acc, item) => acc + parseFloat(item.selling_price) * item.quantity, 0);
-  setCheckOutPrice(totalPrice.toFixed(2))
-  useEffect(() => {
-    fetchCart();
-    console.log(cartItems);
-  }, []);
+  useEffect(()=>{
+    const totalPrice = cartItems.reduce((acc, item) => acc + parseFloat(item.selling_price) * item.quantity, 0);
+    setCheckOutPrice(totalPrice.toFixed(2))
+  },[setCheckOutPrice])
+  
+  useEffect(()=>{
+    fetchCart()
+  },[])
 
+  useEffect(()=>{
+    console.log(cartItems)
+  },[cartItems])
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -58,6 +72,8 @@ function CartPage() {
       </div>
     );
   }
+
+  
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 md:px-10">
@@ -98,13 +114,20 @@ function CartPage() {
 
             {/* Floating Total Summary */}
             <div className="absolute bottom-[-20px] right-6 bg-[#98568d] text-white px-6 py-3 rounded-xl shadow-lg">
-              <span className="font-medium">Total: ₹{totalPrice.toFixed(2)}</span>
+              <span className="font-medium">Total: ₹{(()=>{
+                const totalPrice = cartItems.reduce((acc, item) => acc + parseFloat(item.selling_price) * item.quantity, 0);
+                return totalPrice.toFixed(2);
+              })()}</span>
             </div>
           </>
         )}
       </div>
       <div className="flex justify-center mt-4">
-        <button onClick={()=> navigate("/checkout")} disabled className="bg-green-600  hover:bg-green-500 rounded-lg p-4 text-xl text-white shadow cursor-not-allowed">
+        <button onClick={()=> {
+          sendCartToOrders()
+          navigate("/checkout")
+
+        }}  className={cartItems.length === 0 ? "bg-green-600  hover:bg-green-500 rounded-lg p-4 text-xl text-white shadow cursor-not-allowed ": "bg-[#98568d] hover:bg-[#98568d] rounded-lg p-4 text-xl text-white shadow cursor-pointer"} disabled={cartItems.length === 0}>
         Proceed to buy
       </button>
       </div>

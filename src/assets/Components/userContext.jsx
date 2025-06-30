@@ -8,6 +8,9 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ name: '', email: '', contact: '', city: '', state: '' });
   const [buyer,setBuyer] = useState({name: '', contact: '', address: '', city: '', state: '' })
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [checkOutPrice, setCheckOutPrice] = useState(0);
+  
   const [buyerLogged,setBuyerLogged] = useState(()=>{
     return localStorage.getItem("buyerLogged") === "true";
   })
@@ -15,7 +18,7 @@ export const UserProvider = ({ children }) => {
   return localStorage.getItem("userLogged") === "true";
 });
   const [name, setName] = useState('');
-  const [checkOutPrice,setCheckOutPrice] = useState(0)
+  
 
   const fetchUser = async () => {
     try {
@@ -36,7 +39,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchUser, userLogged, setUserLogged, name, setName,buyerLogged,setBuyerLogged,checkOutPrice,setCheckOutPrice }}>
+    <UserContext.Provider value={{ user, setUser, fetchUser, userLogged, setUserLogged, name, setName,buyerLogged,setBuyerLogged,showConfetti,setShowConfetti,checkOutPrice,setCheckOutPrice,buyer,setBuyer }}>
       {children}
     </UserContext.Provider>
   );
