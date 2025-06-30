@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavbarDashboard from '../Components/NavbarDashboard';
 import SidebarDashboard from '../Components/SidebarDashboard';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { URL as BASE_URL } from '../Components/url';
 import categoryList from '../data/category.json'; // import categories

@@ -107,9 +107,9 @@ function ProductDesc() {
             {/* Price */}
             <div className="flex gap-3 items-center mt-2">
               {product.mrp !== product.selling_price && (
-                <span className="text-xl text-gray-400 line-through">₹{product.mrp}</span>
+                <span className="text-xl text-gray-400 line-through">₹{Number(product.mrp).toLocaleString('en-IN')}</span>
               )}
-              <span className="text-2xl font-semibold text-green-600">₹{product.selling_price}</span>
+              <span className="text-2xl font-semibold text-green-600">₹{Number(product.selling_price).toLocaleString('en-IN')}</span>
             </div>
 
             {/* Quantity Selector */}
@@ -131,16 +131,7 @@ function ProductDesc() {
 
             {/* Buttons */}
             <div className="flex gap-4 flex-wrap mt-6">
-              <button
-                disabled={product.quantity === 0}
-                className={`${
-                  product.quantity === 0
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-yellow-500 hover:bg-yellow-600"
-                } text-white px-6 py-3 rounded-lg font-semibold shadow-md transition`}
-              >
-                {product.quantity === 0 ? "Out Of Stock" : "Proceed to Buy"}
-              </button>
+              
 
               <button
                 onClick={handleAddToCart}

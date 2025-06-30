@@ -14,7 +14,7 @@ function UserHomePage() {
     try {
       const response = await axios.get(`${URL}/buyer/homePage`);
       setProducts(response.data.result);
-      console.log(response.data.result)
+      // console.log(response.data.result)
       setLoading(false)
     } catch (err) {
       console.error("err", err);
@@ -67,11 +67,11 @@ function UserHomePage() {
                 <div className="space-x-2 text-[13px]">
                   {product.mrp !== product.selling_price && (
                     <span className="line-through text-gray-500">
-                      ₹{product.mrp}
+                      ₹{Number(product.mrp).toLocaleString('en-IN')}
                     </span>
                   )}
                   <span className="text-green-600 font-medium">
-                    ₹{product.selling_price}
+                    ₹{Number(product.selling_price).toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>

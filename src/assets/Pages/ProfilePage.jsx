@@ -5,7 +5,7 @@ import axios from "axios";
 import { URL } from "../Components/url";
 import { UserContext } from "../Components/userContext";
 import cityData from "../../assets/data/city.json";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 function ProfilePage() {
   const [name, setName] = useState("");

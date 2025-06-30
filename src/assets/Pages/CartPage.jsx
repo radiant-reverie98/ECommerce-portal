@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import NavbarUser from '../Components/NavbarUser';
-
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../Components/userContext';
+import { Helmet } from 'react-helmet-async';
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const {setCheckOutPrice} = useContext(UserContext)
 
   const fetchCart = async () => {
     try {
@@ -14,6 +18,7 @@ function CartPage() {
         withCredentials: true,
       });
       setCartItems(res.data.message);
+      
     } catch (err) {
       console.error('Error fetching cart:', err);
     } finally {
@@ -32,10 +37,18 @@ function CartPage() {
     }
   };
 
-  const totalPrice = cartItems.reduce((acc, item) => acc + parseFloat(item.selling_price) * item.quantity, 0);
+  // Sending the cart to orders
 
+  const sendCartToOrders = async () =>{
+    const response = await axios.post(``)
+  }
+
+
+  const totalPrice = cartItems.reduce((acc, item) => acc + parseFloat(item.selling_price) * item.quantity, 0);
+  setCheckOutPrice(totalPrice.toFixed(2))
   useEffect(() => {
     fetchCart();
+    console.log(cartItems);
   }, []);
 
   if (loading) {
@@ -74,7 +87,7 @@ function CartPage() {
                   </div>
                   <button
                     onClick={() => deleteItem(item.product_id)}
-                    className="text-red-500 hover:text-red-600 transition-colors cursor-pointer"
+                    className="text-red-500  hover:text-red-600 transition-colors cursor-pointer"
                     title="Remove from cart" 
                   >
                     <Trash2 />
@@ -91,7 +104,7 @@ function CartPage() {
         )}
       </div>
       <div className="flex justify-center mt-4">
-        <button className="bg-green-600 hover:bg-green-500 rounded-lg p-4 text-xl text-white shadow cursor-pointer">
+        <button onClick={()=> navigate("/checkout")} disabled className="bg-green-600  hover:bg-green-500 rounded-lg p-4 text-xl text-white shadow cursor-not-allowed">
         Proceed to buy
       </button>
       </div>

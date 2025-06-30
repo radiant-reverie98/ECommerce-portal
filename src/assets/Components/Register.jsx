@@ -4,7 +4,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import {URL} from './url'; // Adjust the import path as necessary
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 function Register({setUserLogged}) {
      const Navigate = useNavigate();
      const [errors, setErrors] = useState({})

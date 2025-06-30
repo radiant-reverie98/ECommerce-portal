@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import NavbarDashboard from '../Components/NavbarDashboard';
 import SidebarDashboard from '../Components/SidebarDashboard';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { URL as BASE_URL } from '../Components/url';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditProduct() {
-  const { id } = useParams(); // product_id from URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [productName, setProductName] = useState('');

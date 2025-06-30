@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavbarDashboard from "../Components/NavbarDashboard";
 import SidebarDashboard from "../Components/SidebarDashboard";
 import { URL } from "../Components/url";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

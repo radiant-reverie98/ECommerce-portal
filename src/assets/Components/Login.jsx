@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { URL } from './url';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { UserContext } from './userContext';
 
 function Login() {

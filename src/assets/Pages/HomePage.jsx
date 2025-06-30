@@ -7,7 +7,7 @@ import earnImg from '../images/Earn more.webp'
 import hassle from '../images/Hassle.webp'
 import newSeller from '../images/New seller.webp'
 import parcel from '../images/istockphoto-1434715649-612x612.jpg'
-import { Helmet } from 'react-helmet' // For setting the page title
+import { Helmet } from 'react-helmet-async' // For setting the page title
 
 function HomePage() {
   return (

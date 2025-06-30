@@ -15,6 +15,7 @@ export const UserProvider = ({ children }) => {
   return localStorage.getItem("userLogged") === "true";
 });
   const [name, setName] = useState('');
+  const [checkOutPrice,setCheckOutPrice] = useState(0)
 
   const fetchUser = async () => {
     try {
@@ -35,7 +36,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchUser, userLogged, setUserLogged, name, setName,buyerLogged,setBuyerLogged }}>
+    <UserContext.Provider value={{ user, setUser, fetchUser, userLogged, setUserLogged, name, setName,buyerLogged,setBuyerLogged,checkOutPrice,setCheckOutPrice }}>
       {children}
     </UserContext.Provider>
   );
