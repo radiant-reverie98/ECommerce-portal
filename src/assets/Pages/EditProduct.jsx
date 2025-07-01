@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { URL as BASE_URL } from '../Components/url';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast'; 
 
 function EditProduct() {
   const { id } = useParams();
@@ -34,7 +35,7 @@ function EditProduct() {
         setCategory(product.category || '');
       } catch (err) {
         console.error("Failed to fetch product:", err);
-        alert("Failed to load product details.");
+        toast.error("Failed to load product details.");
       }
     };
 
@@ -58,16 +59,17 @@ function EditProduct() {
         withCredentials: true,
       });
 
-      alert("Product updated successfully!");
+      toast.success("Product updated successfully!");
       navigate('/dashboard');
     } catch (err) {
       console.error("Update failed:", err);
-      alert("Failed to update product.");
+      toast.error("Failed to update product.");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Toaster/>
       <Helmet>
         <title>GrabNest - Edit Product</title>
       </Helmet>

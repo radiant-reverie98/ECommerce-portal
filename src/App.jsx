@@ -18,6 +18,9 @@ import RegisterUser from './assets/Pages/RegisterUser';
 import ProductDesc from './assets/Pages/ProductDesc';
 import CartPage from './assets/Pages/CartPage';
 import CheckoutPage from './assets/Pages/CheckOutPage';
+import MyOrders from './assets/Pages/MyOrders';
+import TrackMyOrders from './assets/Pages/TrackMyOrders';
+import SellerTrackOrders from './assets/Pages/SellerTrackOrders';
 
 function App() {
   const { userLogged, setUserLogged } = useContext(UserContext);
@@ -45,6 +48,8 @@ function App() {
             <Route path="/dashboard/profile" element={<ProfilePage />} />
             <Route path="/dashboard/listProduct" element={<ProductList />} />
             <Route path="/dashboard/editProduct/:id" element={<EditProduct/>}/>
+            <Route path="/dashboard/sellerOrders" element={<MyOrders/>}/>
+            <Route path="/dashboard/trackOrder" element={<SellerTrackOrders/>}/>
             <Route path="*" element={<NoPageExists/>} />
           </>
         ) : (
@@ -62,6 +67,7 @@ function App() {
         <Route path = "/product-desc/:id" element = {<ProductDesc/>}/>
         <Route path = "/cart" element={<CartPage/>}/>
         <Route path = "/checkout" element = {<CheckoutPage/>}/>
+        <Route path = "/myorders" element = {<TrackMyOrders/>}/>
       </Routes>
     </div>
   );

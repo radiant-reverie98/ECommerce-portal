@@ -151,19 +151,30 @@ router.delete("/deleteSingleProduct/:id", verifyToken, (req, res) => {
   const product_id = req.params.id;
   const seller_id = req.userId;
 
-  const sql = `DELETE FROM products WHERE seller_id = ? AND product_id = ?`;
+  // Step 1: Delete from order_items first
+  const deleteOrderItemsSQL = `DELETE FROM order_items WHERE product_id = ?`;
 
-  db.query(sql, [seller_id, product_id], (err, result) => {
-    if (err) {
-      console.log("Catching database error", err);
-      return res.status(500).json({ message: "Database error" });
+  db.query(deleteOrderItemsSQL, [product_id], (err1, result1) => {
+    if (err1) {
+      console.log("Error deleting from order_items:", err1);
+      return res.status(500).json({ message: "Error deleting related order items" });
     }
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Product not found or unauthorized" });
-    }
+    // Step 2: Now delete from products if it belongs to the seller
+    const deleteProductSQL = `DELETE FROM products WHERE seller_id = ? AND product_id = ?`;
 
-    return res.status(200).json({ message: "Product deleted successfully" });
+    db.query(deleteProductSQL, [seller_id, product_id], (err2, result2) => {
+      if (err2) {
+        console.log("Error deleting product:", err2);
+        return res.status(500).json({ message: "Error deleting product" });
+      }
+
+      if (result2.affectedRows === 0) {
+        return res.status(404).json({ message: "Product not found or unauthorized" });
+      }
+
+      return res.status(200).json({ message: "Product deleted successfully" });
+    });
   });
 });
 

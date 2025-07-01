@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { URL as BASE_URL } from '../Components/url';
 import categoryList from '../data/category.json'; // import categories
+import { Toaster,toast } from 'react-hot-toast';
 
 function ProductList() {
   const [images, setImages] = useState([]);
@@ -55,7 +56,7 @@ function ProductList() {
         }
       );
 
-      alert("Product listed successfully!");
+      toast.success("Product listed successfully!");
       console.log(res.data);
 
       setProductName('');
@@ -77,6 +78,7 @@ function ProductList() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Toaster/>
       <Helmet>
         <title>GrabNest - List Product</title>
       </Helmet>

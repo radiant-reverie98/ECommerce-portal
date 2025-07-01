@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
   const [buyerLogged,setBuyerLogged] = useState(()=>{
     return localStorage.getItem("buyerLogged") === "true";
   })
+  
   const [userLogged, setUserLogged] = useState(() => {
   return localStorage.getItem("userLogged") === "true";
 });

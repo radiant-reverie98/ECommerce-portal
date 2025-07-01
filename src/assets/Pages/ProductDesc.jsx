@@ -8,6 +8,7 @@ import { UserContext } from "../Components/userContext";
 import toast, { Toaster } from "react-hot-toast";
 
 function ProductDesc() {
+  
   const { id } = useParams();
   const navigate = useNavigate();
   const { buyerLogged } = useContext(UserContext);
@@ -21,6 +22,7 @@ function ProductDesc() {
       try {
         const res = await axios.get(`${URL}/buyer/productDesc/${id}`);
         const fetchedProduct = res.data.result[0];
+        // console.log(fetchedProduct.quantity)
         setProduct(fetchedProduct);
         setSelectedImage(fetchedProduct.product_image1);
       } catch (err) {
@@ -135,7 +137,7 @@ function ProductDesc() {
 
               <button
                 onClick={handleAddToCart}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition"
+                className={product.quantity ? "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition cursor-pointer" : "bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold shadow-md cursor-not-allowed "}  disabled={product.quantity === 0}
               >
                 Add to Cart
               </button>

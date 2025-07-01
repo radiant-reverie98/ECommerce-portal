@@ -31,7 +31,7 @@ function SidebarDashboard() {
   }
   return (
     <div>
-      <div className="bg-[#0e5ab0] left-0 h-full w-64 flex flex-col justify-between">
+      <div className="bg-[#0e5ab0] left-0 h-full w-64 flex flex-col justify-between min-h-screen ">
         <div className="text-white text-lg font-semibold p-5">
           <h1 className="mb-4 text-semibold text-center">Dashboard</h1>
           <ul className="space-y-2">
@@ -40,7 +40,9 @@ function SidebarDashboard() {
             <Link to="/dashboard/profile"><li className="hover:bg-[#0c4a8b] p-2 rounded-md cursor-pointer text-center">Profile</li></Link>
             
             <Link to="/dashboard/listProduct"><li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">List Product</li></Link>
-            <li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">Track Order</li>
+            <Link to="/dashboard/trackOrder"><li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">Track Order</li></Link>
+            <Link to="/dashboard/sellerOrders"><li className="hover:bg-[#0c4a8b] p-2 rounded cursor-pointer text-center">My Orders</li></Link>
+            
             <li className="hover:bg-red-500 p-2 rounded cursor-pointer text-center " onClick={handleLogout}>Logout</li>
           </ul>
         </div>

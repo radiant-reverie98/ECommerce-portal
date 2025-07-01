@@ -62,7 +62,9 @@ function LoginUser() {
       const response = await axios.post((`${URL}/buyerAuth/loginBuyer`),{buyer_username : username , buyer_password : password},{withCredentials : true})
       if (response.status === 200) {
         localStorage.setItem("buyerLogged",true);
-        setBuyerLogged(true);
+        setBuyerLogged(()=>{
+          return localStorage.setItem("buyerLogged",true);
+        });
       }
       console.log(response)
       toast.success("Welcome to GrabNest!")
