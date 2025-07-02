@@ -44,10 +44,10 @@ function TrackOrdersSeller() {
 
   const statusBadge = (status) => {
     const colorMap = {
-      Pending: 'bg-yellow-100 text-yellow-800',
-      Shipped: 'bg-blue-100 text-blue-800',
+      'Pending': 'bg-yellow-100 text-yellow-800',
+      'Shipped': 'bg-blue-100 text-blue-800',
       'Out for Delivery': 'bg-purple-100 text-purple-800',
-      Delivered: 'bg-green-100 text-green-800',
+      'Delivered': 'bg-green-100 text-green-800',
     };
 
     return (
@@ -87,7 +87,7 @@ function TrackOrdersSeller() {
                     <img
                       src={`${URL}/uploads/${order.product_image1}`}
                       alt={order.product_title}
-                      className="w-24 h-24 object-cover rounded-lg border"
+                      className="w-24 h-24 object-cover rounded-lg "
                     />
                     <div>
                       <h2 className="text-lg font-semibold text-gray-800">

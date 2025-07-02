@@ -9,7 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 
 function LoginUser() {
-  const {setBuyerLogged} = useContext(UserContext)
+  const {setBuyerLogged,buyerLogged} = useContext(UserContext)
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -62,11 +62,14 @@ function LoginUser() {
       const response = await axios.post((`${URL}/buyerAuth/loginBuyer`),{buyer_username : username , buyer_password : password},{withCredentials : true})
       if (response.status === 200) {
         localStorage.setItem("buyerLogged",true);
-        setBuyerLogged(()=>{
-          return localStorage.setItem("buyerLogged",true);
-        });
+        function buyerLogged(){
+           localStorage.setItem("buyerLogged",true)
+           return localStorage.getItem("buyerLogged") === "true";
+        }
+        setBuyerLogged(buyerLogged())
+      
       }
-      console.log(response)
+      // console.log(response)
       toast.success("Welcome to GrabNest!")
       navigate("/")
 
@@ -76,6 +79,9 @@ function LoginUser() {
       alert("Error logging in . Please try again later")
     }
   }
+  useState(() =>{
+    console.log(buyerLogged)
+  },[buyerLogged])
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Toaster position="top-center" />
